@@ -1,0 +1,13 @@
+{
+  "name": "inkwell-pack-datetimeutils",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node node_modules/@inkwell-ui/core-pack/scripts/validate.mjs .",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@inkwell-ui/core-pack": "link:../Inkwell-Core-Pack"
+  }
+}
