@@ -15,7 +15,7 @@ test("every template agrees with its pins and fields", () => {
 });
 
 test("every node is pure, category Time, one 'value' output", () => {
-  assert.equal(nodes.length, 7);
+  assert.equal(nodes.length, 10);
   for (const n of nodes) {
     assert.equal(n.def.pure, true, n.id);
     assert.equal(n.def.category, "Time", n.id);
@@ -78,7 +78,57 @@ for (const [kind, inputs, fields, want] of cases) {
   test(`${kind} ${JSON.stringify(inputs)} ${JSON.stringify(fields)}`, () => assert.deepEqual(run(kind, inputs, fields), want));
 }
 
-// Flash 8 has no Date-free shortcuts here, but these templates must not need the Date class at all (it is untested in Skyrim).
-test("no template uses the Date class", () => {
-  for (const n of nodes) assert.doesNotMatch(n.text, /\bDate\b/, n.id);
+const SUN = 1793565091; // 2026-11-01 20:31:31 UTC, a Sunday (the value the in-game Date spike showed)
+const dateCases = [
+  ["GetDatePart", { timestamp: 0 }, { part: "year" }, 1970],
+  ["GetDatePart", { timestamp: 0 }, { part: "month" }, 1],
+  ["GetDatePart", { timestamp: 0 }, { part: "day" }, 1],
+  ["GetDatePart", { timestamp: 0 }, { part: "weekday" }, 4],
+  ["GetDatePart", { timestamp: 0 }, { part: "dayOfYear" }, 1],
+  ["GetDatePart", { timestamp: 1709164800 }, { part: "year" }, 2024],
+  ["GetDatePart", { timestamp: 1709164800 }, { part: "month" }, 2],
+  ["GetDatePart", { timestamp: 1709164800 }, { part: "day" }, 29],
+  ["GetDatePart", { timestamp: 1709164800 }, { part: "weekday" }, 4],
+  ["GetDatePart", { timestamp: 1709164800 }, { part: "dayOfYear" }, 60],
+  ["GetDatePart", { timestamp: SUN }, { part: "hour" }, 20],
+  ["GetDatePart", { timestamp: SUN }, { part: "minute" }, 31],
+  ["GetDatePart", { timestamp: SUN }, { part: "second" }, 31],
+  ["GetDatePart", { timestamp: SUN }, { part: "weekday" }, 0],
+  ["GetDatePart", { timestamp: SUN }, { part: "dayOfYear" }, 305],
+  ["GetDatePart", { timestamp: 1735603200 }, { part: "dayOfYear" }, 366], // 2024-12-31, a leap year
+  ["GetDatePart", { timestamp: -5 }, { part: "year" }, 1970],
+  ["GetDatePart", { timestamp: NaN }, { part: "year" }, 1970],
+  ["GetDatePart", { timestamp: 86399.9 }, { part: "hour" }, 23],
+  ["MakeTimestamp", { year: 2024, month: 2, day: 29, hour: 0, minute: 0, second: 0 }, {}, 1709164800],
+  ["MakeTimestamp", {}, {}, 0],
+  ["MakeTimestamp", { year: 2024, month: 13, day: 1 }, {}, 1735689600],
+  ["MakeTimestamp", { year: NaN }, {}, 0],
+];
+
+for (const [kind, inputs, fields, want] of dateCases) {
+  test(`${kind} ${JSON.stringify(inputs)} ${JSON.stringify(fields)}`, () => assert.deepEqual(run(kind, inputs, fields), want));
+}
+
+test("Get Date Part in local time agrees with the JS local Date", () => {
+  const d = new Date(SUN * 1000);
+  for (const [part, want] of [["year", d.getFullYear()], ["month", d.getMonth() + 1], ["day", d.getDate()], ["hour", d.getHours()], ["weekday", d.getDay()]])
+    assert.equal(run("GetDatePart", { timestamp: SUN }, { part, utc: false }), want, part);
+});
+
+test("Make Timestamp and Get Date Part round-trip", () => {
+  const t = run("MakeTimestamp", { year: 2031, month: 7, day: 4, hour: 13, minute: 5, second: 9 });
+  const parts = ["year", "month", "day", "hour", "minute", "second"].map((part) => run("GetDatePart", { timestamp: t }, { part }));
+  assert.deepEqual(parts, [2031, 7, 4, 13, 5, 9]);
+});
+
+test("Now is a whole-second timestamp near the real time, and volatile (never cached)", () => {
+  const n = run("Now", {});
+  assert.equal(n, Math.floor(n));
+  assert.ok(Math.abs(n - Date.now() / 1000) < 2);
+  assert.equal(byKind.Now.def.extra?.volatile, true);
+});
+
+// The Date class works in Skyrim (samples/menu-date-spike, 2026-11-01), but only these three nodes need it.
+test("only Now, Get Date Part and Make Timestamp use the Date class", () => {
+  for (const n of nodes) assert.equal(/\bDate\b/.test(n.text), ["Now", "GetDatePart", "MakeTimestamp"].includes(n.def.kind), n.id);
 });
