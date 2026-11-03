@@ -15,6 +15,9 @@
   "fields": {},
   "as2Template": "templates/Now.as2",
   "extra": {
-    "volatile": true
+    "volatile": true,
+    "inspector": {
+      "description": "Gives the current date and time as a timestamp."
+    }
   }
 }

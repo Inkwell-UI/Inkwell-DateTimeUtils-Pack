@@ -29,5 +29,10 @@
     }
   ],
   "fields": {},
-  "as2Template": "templates/ToSeconds.as2"
+  "as2Template": "templates/ToSeconds.as2",
+  "extra": {
+    "inspector": {
+      "description": "Adds hours, minutes and seconds into a total in seconds."
+    }
+  }
 }

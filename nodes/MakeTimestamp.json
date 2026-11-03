@@ -44,5 +44,10 @@
     }
   ],
   "fields": {},
-  "as2Template": "templates/MakeTimestamp.as2"
+  "as2Template": "templates/MakeTimestamp.as2",
+  "extra": {
+    "inspector": {
+      "description": "Builds a timestamp from a date and a time."
+    }
+  }
 }

@@ -19,5 +19,10 @@
     }
   ],
   "fields": {},
-  "as2Template": "templates/FormatTimeAgo.as2"
+  "as2Template": "templates/FormatTimeAgo.as2",
+  "extra": {
+    "inspector": {
+      "description": "Turns an elapsed time into text like 5 minutes ago."
+    }
+  }
 }

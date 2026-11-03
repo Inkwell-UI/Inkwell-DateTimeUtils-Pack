@@ -31,5 +31,10 @@
       "description": "The part of the duration: days, then the hours, minutes and seconds left over (1h 5m 7s gives 1, 5, 7)"
     }
   },
-  "as2Template": "templates/GetDurationPart.as2"
+  "as2Template": "templates/GetDurationPart.as2",
+  "extra": {
+    "inspector": {
+      "description": "Reads the hours, minutes or seconds part of a duration."
+    }
+  }
 }

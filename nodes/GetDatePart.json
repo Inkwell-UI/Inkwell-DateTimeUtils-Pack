@@ -40,5 +40,10 @@
       "description": "Read the part in UTC (the same on every PC); off reads it in the player's local time zone"
     }
   },
-  "as2Template": "templates/GetDatePart.as2"
+  "as2Template": "templates/GetDatePart.as2",
+  "extra": {
+    "inspector": {
+      "description": "Reads the year, month, day, hour, minute or second of a timestamp."
+    }
+  }
 }

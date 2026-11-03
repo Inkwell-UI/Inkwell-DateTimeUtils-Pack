@@ -32,5 +32,10 @@
       "description": "Digits after the seconds; cut off, never rounded up, so 59.999 never shows as 60.00"
     }
   },
-  "as2Template": "templates/FormatDuration.as2"
+  "as2Template": "templates/FormatDuration.as2",
+  "extra": {
+    "inspector": {
+      "description": "Turns a number of seconds into text like 1:05:09."
+    }
+  }
 }

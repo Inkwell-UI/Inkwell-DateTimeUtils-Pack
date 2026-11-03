@@ -29,5 +29,10 @@
       "description": "Sunday or Sun"
     }
   },
-  "as2Template": "templates/WeekdayName.as2"
+  "as2Template": "templates/WeekdayName.as2",
+  "extra": {
+    "inspector": {
+      "description": "Turns a weekday number into its name."
+    }
+  }
 }

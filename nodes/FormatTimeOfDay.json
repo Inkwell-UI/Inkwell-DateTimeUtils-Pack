@@ -29,5 +29,10 @@
       "description": "12h gives 3:30 PM, 24h gives 15:30"
     }
   },
-  "as2Template": "templates/FormatTimeOfDay.as2"
+  "as2Template": "templates/FormatTimeOfDay.as2",
+  "extra": {
+    "inspector": {
+      "description": "Turns an hour of the day into text like 3:30 PM."
+    }
+  }
 }

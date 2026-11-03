@@ -29,5 +29,10 @@
       "description": "January or Jan"
     }
   },
-  "as2Template": "templates/MonthName.as2"
+  "as2Template": "templates/MonthName.as2",
+  "extra": {
+    "inspector": {
+      "description": "Turns a month number into its name."
+    }
+  }
 }
