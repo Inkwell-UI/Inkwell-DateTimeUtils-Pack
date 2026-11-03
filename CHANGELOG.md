@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+Every node now has an Inspector description. No pin, field or template changed.
+
 ## 0.1.2
 
 Fix: Format Time Of Day had the same multi-declarator `var` (`var hh = ..., mm = ...`) that 0.1.1 removed from Get Date Part; graphs using it still failed to build. Now separate statements.
