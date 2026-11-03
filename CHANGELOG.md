@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+Fix: Get Date Part generated a multi-declarator `var` that the FFDec AS2 compiler rejects ("CURLY_CLOSE expected but COMMA found"), so any graph using it failed to build. The declarations are now separate statements.
+
 ## 0.1.0
 
 First release: 10 pure nodes (category Time), all `datetimeutils/<Kind>@1`. A timestamp is a number of seconds since 1970-01-01 UTC.
