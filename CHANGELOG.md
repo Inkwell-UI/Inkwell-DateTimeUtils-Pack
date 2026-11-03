@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+Fix: Format Time Of Day had the same multi-declarator `var` (`var hh = ..., mm = ...`) that 0.1.1 removed from Get Date Part; graphs using it still failed to build. Now separate statements.
+
 ## 0.1.1
 
 Fix: Get Date Part generated a multi-declarator `var` that the FFDec AS2 compiler rejects ("CURLY_CLOSE expected but COMMA found"), so any graph using it failed to build. The declarations are now separate statements.
