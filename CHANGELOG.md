@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+Supports any Inkwell from 0.5.0 on (compatible.tool is now >=0.5.0 instead of ^0.x). No node, pin, field or template changed.
+
 ## 0.1.3
 
 Every node now has an Inspector description. No pin, field or template changed.
